@@ -92,10 +92,10 @@ class SSLExampleEnv(SSLBaseEnv):
 
         remove_self = lambda robots, selfId: {id: robot for id, robot in robots.items() if id != selfId}
 
-        myActions = []
+        my_actions = []
         for i in self.my_agents.keys():
             action = self.my_agents[i].step(self.frame.robots_blue[i], remove_self(obstacles, i), teammates, self.targets)
-            myActions.append(action)
+            my_actions.append(action)
 
         others_actions = []
         if self.DYNAMIC_OBSTACLES:
@@ -113,7 +113,7 @@ class SSLExampleEnv(SSLBaseEnv):
 
                 others_actions.append(self.yellow_agents[i].step(self.frame.robots_yellow[i], obstacles, dict(), random_target, True))
 
-        return myActions + others_actions
+        return my_actions + others_actions
 
     def _calculate_reward_and_done(self):
         return 0, False
