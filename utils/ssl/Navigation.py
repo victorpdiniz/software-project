@@ -40,14 +40,12 @@ class Navigation:
     return ((value - lLower) * (rHigher - rLower) / (lHigher - lLower) + rLower)
 
   @staticmethod
-  def goToPoint(robot: Robot, target: Point, is_target: bool) -> tuple:
+  def goToPoint(robot: Robot, target: Point) -> tuple:
     target = Point(target.x * M_TO_MM, target.y * M_TO_MM)
     robot_position = Point(robot.x * M_TO_MM, robot.y * M_TO_MM)
     robot_angle = Navigation.degrees_to_radians(Geometry.normalize_angle(robot.theta, 0, 180))
 
     max_velocity = MAX_VELOCITY
-    print(f"navigation: robot (x,y)={robot_position}.")
-    print(f"navigation: target (x,y)={target}.")
     distance_to_target = robot_position.dist_to(target)
     kp = ANGLE_KP
 
@@ -55,7 +53,7 @@ class Navigation:
     proportional_velocity_factor = PROP_VELOCITY_MIN_FACTOR
     min_proportional_distance = MIN_DIST_TO_PROP_VELOCITY
 
-    if distance_to_target <= min_proportional_distance and is_target:
+    if distance_to_target <= min_proportional_distance:
       max_velocity = max_velocity * Navigation.map_value(distance_to_target, 0.0, min_proportional_distance, proportional_velocity_factor, 1.0)
 
     target_angle = (target - robot_position).angle()
