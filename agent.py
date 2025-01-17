@@ -28,14 +28,26 @@ class ExampleAgent(BaseAgent):
             
             position = Point(self.robot.x, self.robot.y)
             next_target = self.targets[0]
-            
+                
             # Calculates a new path if a new target is generated.
             if self.current_target != next_target:
+                print("-" * 100)
                 print("agent: new target generated.")
                 
                 self.path = a_star(position, next_target, self.opponents)
                 print("agent: search for path completed.")
                 
+                # Restarts index and target position.
+                self.current_target = next_target
+                self.path_index = 0
+                
+            # Calculates a new path if target was not reached.
+            if position != self.targets[0] and len(self.path) == self.path_index + 1:
+                print("agent: target was not reached, recalculating route.")
+
+                self.path = a_star(position, next_target, self.opponents)
+                print("agent: search for new path completed.")
+
                 # Restarts index and target position.
                 self.current_target = next_target
                 self.path_index = 0

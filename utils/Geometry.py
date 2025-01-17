@@ -49,3 +49,7 @@ class Geometry:
     @staticmethod
     def from_polar(length: float, angle: float) -> Point:
         return Point(math.cos(angle) * length, math.sin(angle) * length)
+    
+    @staticmethod
+    def medium_point(p_1: Point, p_2: Point) -> Point:
+        return Point((p_1.x + p_2.x) / 2, (p_1.y + p_2.y) / 2)
